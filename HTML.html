@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Dictionary</title>
+    <link rel="stylesheet" href="CSS.css">
+</head>
+<body>
+    <div class="container">
+        <h1>My Dictionary</h1>
+
+        <div id="languageSelect" class="language-select">
+            <p>Choose your dictionary:</p>
+            <button onclick="selectLanguage('english')">English</button>
+            <button onclick="selectLanguage('spanish')">Spanish</button>
+        </div>
+
+        <div id="dictionarySection" style="display:none;">
+            <button id="backBtn" onclick="goBack()">⬅ Back</button>
+            <h2 id="dictionaryTitle"></h2>
+            <button id="showAddWordBtn" onclick="toggleAddWord()">Add Word</button>
+
+            <!-- English Form -->
+            <div id="addWordFormEnglish" style="display:none;">
+                <form id="wordFormEnglish">
+                    <input type="text" id="wordEn" placeholder="Word" required>
+                    <input type="text" id="translationEn" placeholder="Translation" required>
+                    <input type="text" id="synonymsEn" placeholder="Synonyms">
+                    <textarea id="meaningsEn" placeholder="All meanings/uses"></textarea>
+
+                    <!-- Region with flags -->
+                    <select id="regionEn">
+                        <option value="british">🇬🇧 British</option>
+                        <option value="american">🇺🇸 American</option>
+                        <option value="australian">🇦🇺 Australian</option>
+                        <option value="global">🌍 Global</option>
+                    </select>
+
+                    <select id="formalityEn">
+                        <option value="formal">Formal</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="informal">Informal</option>
+                    </select>
+
+                    <select id="ageEn">
+                        <option value="modern">Modern</option>
+                        <option value="old-fashioned">Old-fashioned</option>
+                    </select>
+
+                    <textarea id="exampleEn" placeholder="Example sentence"></textarea>
+                    <button type="submit">Add Word</button>
+                </form>
+            </div>
+
+            <!-- Spanish Form -->
+            <div id="addWordFormSpanish" style="display:none;">
+                <form id="wordFormSpanish">
+                    <input type="text" id="wordEs" placeholder="Palabra" required>
+                    <input type="text" id="translationEs" placeholder="Translation" required>
+                    <input type="text" id="synonymsEs" placeholder="Sinónimos">
+                    <textarea id="meaningsEs" placeholder="Todos los significados/usos"></textarea>
+
+                    <!-- Spanish Region with flags -->
+                    <select id="regionEs">
+                        <option value="spain">🇪🇸 Spain</option>
+                        <option value="mexico">🇲🇽 Mexico</option>
+                        <option value="latinAmerica">🌎 Latin America</option>
+                    </select>
+
+                    <select id="formalityEs">
+                        <option value="formal">Formal</option>
+                        <option value="neutral">Neutral</option>
+                        <option value="informal">Informal</option>
+                    </select>
+
+                    <select id="ageEs">
+                        <option value="modern">Moderno</option>
+                        <option value="old-fashioned">Anticuado</option>
+                    </select>
+
+                    <textarea id="exampleEs" placeholder="Ejemplo de oración"></textarea>
+                    <button type="submit">Añadir palabra</button>
+                </form>
+            </div>
+
+            <!-- Word Cards -->
+            <div id="wordCards" class="cards"></div>
+        </div>
+            
+            <div id="wordCards" class="cards"></div>
+        </div>
+    </div>
+
+    <script src="JavaScript.js"></script>
+</body>
+</html>

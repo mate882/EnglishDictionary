@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online-Dictionary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2847 0%, #0d1b2a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        section > div {
+            background: linear-gradient(145deg, #2d4a3e 0%, #3d5a4d 100%);
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        section > div:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        img {
+            width: 100%;
+            max-width: 200px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 3px solid #1a2847;
+        }
+
+        button {
+            background: linear-gradient(135deg, #1a2847 0%, #0d1b2a 100%);
+            border: 2px solid #5a7c6f;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 180px;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #2d4a3e 0%, #3d5a4d 100%);
+            border-color: #7a9c8f;
+            transform: scale(1.05);
+        }
+
+        button a {
+            color: #e0f2e9;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            section {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+                padding: 30px 15px;
+            }
+
+            section > div {
+                padding: 25px;
+            }
+
+            img {
+                max-width: 180px;
+                height: 100px;
+            }
+
+            button {
+                padding: 10px 25px;
+            }
+
+            button a {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            section > div {
+                padding: 20px;
+            }
+
+            img {
+                max-width: 160px;
+                height: 90px;
+            }
+
+            button {
+                padding: 10px 20px;
+            }
+
+            button a {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="English">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/330px-Flag_of_the_United_Kingdom.svg.png" alt="English Flag">
+            <button>
+                <a href="English.html">English</a>
+            </button>
+        </div>
+        <div class="Spanish">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Bandera_de_Espa%C3%B1a.svg" alt="Spanish Flag">
+            <button>
+                <a href="Spanish.html">Spanish</a>
+            </button>
+        </div>
+        <div class="German">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/2560px-Flag_of_Germany.svg.png" alt="German Flag">
+            <button>
+                <a href="German.html">German</a>
+            </button>
+        </div>
+        <div class="Frenchs">
+            <img src="https://cdn.britannica.com/82/682-050-8AA3D6A6/Flag-France.jpg" alt="French Flag">
+            <button>
+                <a href="Frenchs.html">French</a>
+            </button>
+        </div>
+        <div class="Greek">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Greece.svg/330px-Flag_of_Greece.svg.png" alt="Greek Flag">
+            <button>
+                <a href="Greek.html">Greek</a>
+            </button>
+        </div>
+        <div class="Chinese">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/2560px-Flag_of_the_People%27s_Republic_of_China.svg.png" alt="Chinese Flag">
+            <button>
+                <a href="Chinese.html">Chinese</a>
+            </button>
+        </div>
+        <div class="Japanese">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/330px-Flag_of_Japan.svg.png" alt="Japanese Flag">
+            <button>
+                <a href="Japanese.html">Japanese</a>
+            </button>
+        </div>
+        <div class="Korean">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png" alt="Korean Flag">
+            <button>
+                <a href="Korean.html">Korean</a>
+            </button>
+        </div>
+    </section>
+</body>
+</html>

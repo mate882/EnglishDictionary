@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The English Lexicon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fecaca 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #7f1d1d 0%, #991b1b 50%, #c2410c 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-title h1 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .header-title p {
+            font-size: 0.875rem;
+            color: #fca5a5;
+            margin-top: 0.25rem;
+        }
+
+        .icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .btn-add {
+            background: white;
+            color: #7f1d1d;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .btn-add:hover {
+            background: #fef2f2;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            border: 4px solid #7f1d1d;
+            display: none;
+        }
+
+        .form-card.active {
+            display: block;
+        }
+
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-header h2 {
+            font-size: 1.5rem;
+            color: #7f1d1d;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6b7280;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+        }
+
+        .btn-close:hover {
+            color: #7f1d1d;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #7f1d1d;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-remove {
+            background: #fee2e2;
+            color: #7f1d1d;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-remove:hover {
+            background: #fecaca;
+        }
+
+        .btn-add-field {
+            background: #7f1d1d;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 0.75rem;
+            transition: background 0.3s;
+        }
+
+        .btn-add-field:hover {
+            background: #991b1b;
+        }
+
+        .btn-save {
+            width: 100%;
+            background: linear-gradient(90deg, #7f1d1d 0%, #c2410c 100%);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        .empty-state {
+            background: white;
+            border-radius: 1rem;
+            padding: 4rem 2rem;
+            text-align: center;
+            border: 2px dashed #d1d5db;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .empty-state svg {
+            width: 4rem;
+            height: 4rem;
+            color: #9ca3af;
+            margin: 0 auto 1rem;
+        }
+
+        .empty-state p {
+            color: #6b7280;
+            font-size: 1.125rem;
+        }
+
+        .word-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 8px solid #7f1d1d;
+        }
+
+        .word-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .word-title {
+            flex: 1;
+        }
+
+        .word-title h3 {
+            font-size: 2rem;
+            color: #7f1d1d;
+            margin-bottom: 0.5rem;
+        }
+
+        .word-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tag-blue {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .tag-purple {
+            background: #e9d5ff;
+            color: #6b21a8;
+        }
+
+        .tag-orange {
+            background: #fed7aa;
+            color: #c2410c;
+        }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            color: #dc2626;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background 0.3s;
+        }
+
+        .btn-delete:hover {
+            background: #fef2f2;
+        }
+
+        .word-section {
+            margin-bottom: 1rem;
+        }
+
+        .word-section h4 {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .word-section ul {
+            list-style: decimal;
+            padding-left: 1.5rem;
+        }
+
+        .word-section li {
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+
+        .example {
+            color: #374151;
+            font-style: italic;
+            padding-left: 1rem;
+            border-left: 2px solid #d1d5db;
+            margin-bottom: 0.5rem;
+        }
+
+        .translations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 1rem;
+        }
+
+        .translation h4 {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .translation p {
+            color: #1f2937;
+        }
+
+        #wordsList {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <div>
+                    <h1>The English Lexicon</h1>
+                    <p>Your Personal Dictionary Companion</p>
+                </div>
+            </div>
+            <button class="btn-add" onclick="toggleForm()">
+                <svg class="icon" style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Add Word
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Add Word Form -->
+        <div id="formCard" class="form-card">
+            <div class="form-header">
+                <h2>Add New Word</h2>
+                <button class="btn-close" onclick="toggleForm()">×</button>
+            </div>
+
+            <form id="wordForm" onsubmit="saveWord(event)">
+                <!-- Word -->
+                <div class="form-group">
+                    <label class="form-label">Word</label>
+                    <input type="text" class="form-input" id="word" placeholder="Enter the word..." required>
+                </div>
+
+                <!-- Dialect, Formality, Modernity -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">🏴 Dialect</label>
+                        <select class="form-select" id="dialect">
+                            <option value="British">British</option>
+                            <option value="American">American</option>
+                            <option value="Australian">Australian</option>
+                            <option value="Other">Standard</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">📝 Formality</label>
+                        <select class="form-select" id="formality">
+                            <option value="Very Formal">Very Formal</option>
+                            <option value="Formal">Formal</option>
+                            <option value="Neutral" selected>Neutral</option>
+                            <option value="Informal">Informal</option>
+                            <option value="Very Informal">Very Informal</option>
+                            <option value="Slang">Slang</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">🕐 Modernity</label>
+                        <select class="form-select" id="modernity">
+                            <option value="Modern" selected>Modern</option>
+                            <option value="Contemporary">Contemporary</option>
+                            <option value="Dated">Dated</option>
+                            <option value="Old-fashioned">Old-fashioned</option>
+                            <option value="Archaic">Archaic</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Meanings -->
+                <div class="form-group">
+                    <label class="form-label">Meanings</label>
+                    <div id="meaningsContainer">
+                        <div class="input-group">
+                            <input type="text" class="form-input" placeholder="Meaning 1">
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add-field" onclick="addMeaning()">+ Add Meaning</button>
+                </div>
+
+                <!-- Examples -->
+                <div class="form-group">
+                    <label class="form-label">Example Sentences</label>
+                    <div id="examplesContainer">
+                        <div class="input-group">
+                            <input type="text" class="form-input" placeholder="Example sentence 1">
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add-field" onclick="addExample()">+ Add Example</button>
+                </div>
+
+                <!-- Synonyms -->
+                <div class="form-group">
+                    <label class="form-label">Synonyms</label>
+                    <input type="text" class="form-input" id="synonyms" placeholder="Enter synonyms separated by commas">
+                </div>
+
+                <!-- Translations -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">🌍 Translation (Georgian)</label>
+                        <input type="text" class="form-input" id="translationGeorgian" placeholder="ქართული თარგმანი">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">🌍 Translation (Russian)</label>
+                        <input type="text" class="form-input" id="translationRussian" placeholder="Русский перевод">
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <button type="submit" class="btn-save">Save Word to Dictionary</button>
+            </form>
+        </div>
+
+        <!-- Words List -->
+        <div id="wordsList"></div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <p>Your dictionary is empty. Start adding words!</p>
+        </div>
+    </div>
+
+    <script>
+        let words = [];
+
+        // Load words from localStorage on page load
+        function loadWords() {
+            const savedWords = localStorage.getItem('englishDictionary');
+            if (savedWords) {
+                words = JSON.parse(savedWords);
+                renderWords();
+            }
+        }
+
+        // Save words to localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('englishDictionary', JSON.stringify(words));
+        }
+
+        function toggleForm() {
+            const formCard = document.getElementById('formCard');
+            formCard.classList.toggle('active');
+        }
+
+        function addMeaning() {
+            const container = document.getElementById('meaningsContainer');
+            const count = container.children.length + 1;
+            const div = document.createElement('div');
+            div.className = 'input-group';
+            div.innerHTML = `
+                <input type="text" class="form-input" placeholder="Meaning ${count}">
+                <button type="button" class="btn-remove" onclick="this.parentElement.remove()">×</button>
+            `;
+            container.appendChild(div);
+        }
+
+        function addExample() {
+            const container = document.getElementById('examplesContainer');
+            const count = container.children.length + 1;
+            const div = document.createElement('div');
+            div.className = 'input-group';
+            div.innerHTML = `
+                <input type="text" class="form-input" placeholder="Example sentence ${count}">
+                <button type="button" class="btn-remove" onclick="this.parentElement.remove()">×</button>
+            `;
+            container.appendChild(div);
+        }
+
+        function saveWord(event) {
+            event.preventDefault();
+
+            const word = {
+                id: Date.now(),
+                word: document.getElementById('word').value,
+                dialect: document.getElementById('dialect').value,
+                formality: document.getElementById('formality').value,
+                modernity: document.getElementById('modernity').value,
+                meanings: Array.from(document.querySelectorAll('#meaningsContainer input'))
+                    .map(input => input.value.trim())
+                    .filter(val => val),
+                examples: Array.from(document.querySelectorAll('#examplesContainer input'))
+                    .map(input => input.value.trim())
+                    .filter(val => val),
+                synonyms: document.getElementById('synonyms').value,
+                translationGeorgian: document.getElementById('translationGeorgian').value,
+                translationRussian: document.getElementById('translationRussian').value
+            };
+
+            words.push(word);
+            saveToLocalStorage();
+            renderWords();
+            document.getElementById('wordForm').reset();
+            
+            // Reset dynamic fields
+            document.getElementById('meaningsContainer').innerHTML = `
+                <div class="input-group">
+                    <input type="text" class="form-input" placeholder="Meaning 1">
+                </div>
+            `;
+            document.getElementById('examplesContainer').innerHTML = `
+                <div class="input-group">
+                    <input type="text" class="form-input" placeholder="Example sentence 1">
+                </div>
+            `;
+            
+            toggleForm();
+        }
+
+        function deleteWord(id) {
+            words = words.filter(w => w.id !== id);
+            saveToLocalStorage();
+            renderWords();
+        }
+
+        function renderWords() {
+            const wordsList = document.getElementById('wordsList');
+            const emptyState = document.getElementById('emptyState');
+
+            if (words.length === 0) {
+                wordsList.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            wordsList.innerHTML = words.map(word => `
+                <div class="word-card">
+                    <div class="word-header">
+                        <div class="word-title">
+                            <h3>${word.word}</h3>
+                            <div class="word-tags">
+                                <span class="tag tag-blue">${word.dialect}</span>
+                                <span class="tag tag-purple">${word.formality}</span>
+                                <span class="tag tag-orange">${word.modernity}</span>
+                            </div>
+                        </div>
+                        <button class="btn-delete" onclick="deleteWord(${word.id})">
+                            <svg style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    ${word.meanings.length > 0 ? `
+                        <div class="word-section">
+                            <h4>Meanings:</h4>
+                            <ul>
+                                ${word.meanings.map(m => `<li>${m}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+
+                    ${word.examples.length > 0 ? `
+                        <div class="word-section">
+                            <h4>Examples:</h4>
+                            ${word.examples.map(e => `<p class="example">"${e}"</p>`).join('')}
+                        </div>
+                    ` : ''}
+
+                    ${word.synonyms ? `
+                        <div class="word-section">
+                            <h4>Synonyms:</h4>
+                            <p>${word.synonyms}</p>
+                        </div>
+                    ` : ''}
+
+                    ${word.translationGeorgian || word.translationRussian ? `
+                        <div class="translations">
+                            ${word.translationGeorgian ? `
+                                <div class="translation">
+                                    <h4>ქართული:</h4>
+                                    <p>${word.translationGeorgian}</p>
+                                </div>
+                            ` : ''}
+                            ${word.translationRussian ? `
+                                <div class="translation">
+                                    <h4>Русский:</h4>
+                                    <p>${word.translationRussian}</p>
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Initial render
+        loadWords();
+    </script>
+</body>
+</html>
